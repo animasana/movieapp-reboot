@@ -4,7 +4,7 @@ import type { MovieProps } from "../types/MovieListTypes";
 interface MovieState {
     genreMap: Record<number, string>;
     setGenreMap: (map: Record<number, string>) => void;
-    movies: MovieProps[],
+    movies: MovieProps[];
     setMovies: (movies: MovieProps[]) => void;
 }
 
