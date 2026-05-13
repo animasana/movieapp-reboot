@@ -1,8 +1,10 @@
-import type { MovieListProps } from "../types/MovieListTypes";
+import { useMovieStore } from "../store/useMovieStore";
 import Movie from "./Movie";
 import styles from "./MoviesList.module.css";
 
-function MovieList({ movies }: MovieListProps) {
+function MovieList() {
+    const movies = useMovieStore((state) => state.movies);
+
     return (
         <div className={styles.movies}>
             {movies.map((movie) => (

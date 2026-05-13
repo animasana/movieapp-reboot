@@ -1,15 +1,14 @@
 ﻿import axios from "axios";
 import { useEffect, useState } from "react";
-import type { MovieSearchResult, MovieProps, MovieGenres } from "../types/MovieListTypes";
+import type { MovieSearchResult, MovieGenres } from "../types/MovieListTypes";
 import MovieList from "../components/MoviesList";
 import styles from "./Home.module.css";
 import { useMovieStore } from "../store/useMovieStore";
 import { GENRE_URL, MOVIEDB_URL } from "../constants";
 
 function Home() {
-    const [loading, setLoading] = useState(true);
-    const [movies, setMovies] = useState<MovieProps[]>([]);    
-    const setGenreMap = useMovieStore((state) => state.setGenreMap);
+    const [loading, setLoading] = useState(true);      
+    const { setGenreMap, setMovies } = useMovieStore();
 
     const getMovies = async () => {        
         try {
@@ -47,7 +46,7 @@ function Home() {
                     <h1>Loading...</h1>
                 </div>
             ) : (                
-                <MovieList movies={movies}/>                
+                <MovieList />                
             )}            
         </div>
     );
