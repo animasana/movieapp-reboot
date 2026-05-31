@@ -1,18 +1,31 @@
-import { Route, Routes, BrowserRouter as Router } from "react-router";
-import Home from "./routes/Home";
-import Detail from "./routes/Detail";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Home, { homeLoader } from "./routes/Home";
+import Detail, { detailLoader } from "./routes/Detail";
 
-function App() { 
-    
-    return (
-        <Router basename="/movieapp-reboot">
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="movie/:id" element={<Detail />} />
-                <Route path="hello" element={<h1>Hello!</h1>} />
-            </Routes>
-        </Router>
-    );
+const router = createBrowserRouter(
+    [
+        {
+            path: "/",
+            element: <Home />,
+            loader: homeLoader as any,
+        },
+        {
+            path: "movie/:id",
+            element: <Detail />,
+            loader: detailLoader as any,
+        },
+        {
+            path: "hello",
+            element: <h1>Hello!</h1>,
+        },
+    ],
+    {
+        basename: "/movieapp-reboot",
+    },
+);
+
+function App() {
+    return <RouterProvider router={router} />;
 }
 
 export default App;

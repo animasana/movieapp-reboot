@@ -1,53 +1,34 @@
 ﻿import axios from "axios";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 import type { MovieSearchResult, MovieGenres } from "../types/MovieListTypes";
-import MovieList from "../components/MoviesList";
 import styles from "./Home.module.css";
-import { useMovieStore } from "../store/useMovieStore";
 import { GENRE_URL, MOVIEDB_URL } from "../constants";
+import HomeContent from "../components/HomeContent";
+import { useLoaderData } from "react-router";
+
+export const homeLoader = async () => {
+    const movies = axios.get<MovieSearchResult>(MOVIEDB_URL);
+    const genres = axios.get<MovieGenres>(GENRE_URL);
+
+    return { homeData: Promise.all([movies, genres]) };
+};
 
 function Home() {
-    const [loading, setLoading] = useState(true);      
-    const { setGenreMap, setMovies } = useMovieStore();
-
-    const getMovies = async () => {        
-        try {
-            const [movieResult, genreResult] = await Promise.all([
-                axios.get<MovieSearchResult>(MOVIEDB_URL),
-                axios.get<MovieGenres>(GENRE_URL),                
-            ]);
-
-            const movieJson = movieResult.data.results;
-            const genreJson = genreResult.data.genres;
-            
-            setMovies(movieJson);            
-
-            const genreMap: Record<number, string> = {};
-            genreJson.forEach((genre) => {
-                genreMap[genre.id] = genre.name;
-            });
-
-            setGenreMap(genreMap);
-        } catch (error) {
-            console.error("데이터를 불러오는 중 에러 발생:", error);
-        } finally {
-            setLoading(false);
-        }
-    };    
-
-    useEffect(() => {
-        getMovies();        
-    }, []);
+    const { homeData } = useLoaderData() as Awaited<
+        ReturnType<typeof homeLoader>
+    >;
 
     return (
         <div className={styles.container}>
-            {loading ? (
-                <div className={styles.loader}>
-                    <h1>Loading...</h1>
-                </div>
-            ) : (                
-                <MovieList />                
-            )}            
+            <Suspense
+                fallback={
+                    <div className={styles.loader}>
+                        <h1>Loading...</h1>
+                    </div>
+                }
+            >
+                <HomeContent dataPromise={homeData} />
+            </Suspense>
         </div>
     );
 }
