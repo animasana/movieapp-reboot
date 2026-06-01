@@ -23,7 +23,7 @@ function Home() {
             <Suspense
                 fallback={
                     <div className={styles.loader}>
-                        <h1>Loading...</h1>
+                        <h1>Loading home...</h1>
                     </div>
                 }
             >

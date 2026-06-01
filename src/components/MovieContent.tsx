@@ -2,12 +2,14 @@
 import type { MovieDetailProps } from "../types/MovieDetailTypes";
 import MovieDetail from "./MovieDetail";
 
-export default function MovieContent({
-    moviePromise,
-}: {
+interface IMovieDetailPromise {
     moviePromise: Promise<MovieDetailProps>;
-}) {
+}
+
+export default function MovieContent({ moviePromise }:IMovieDetailPromise) {
+    
     const movie = use(moviePromise);
+    
     return (
         <MovieDetail
             id={movie.id}

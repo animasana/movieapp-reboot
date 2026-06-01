@@ -13,12 +13,13 @@ export const fetchMovie = async (id: string): Promise<MovieDetailProps> => {
     return json;
 };
 
-export const detailLoader = async ({
-    params,
-}: {
-    params: { id: string };
-}) => {
-    const moviePromise = fetchMovie(params.id);
+interface IParams {
+    params: Promise<{ id: string }>;
+}
+
+export const detailLoader = async ({ params }: IParams) => {
+    const { id } = await params;
+    const moviePromise = fetchMovie(id);
     return { moviePromise };
 }
 
