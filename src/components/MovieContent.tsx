@@ -1,10 +1,6 @@
 ﻿import { use } from "react";
-import type { MovieDetailProps } from "../types/MovieDetailTypes";
 import MovieDetail from "./MovieDetail";
-
-interface IMovieDetailPromise {
-    moviePromise: Promise<MovieDetailProps>;
-}
+import type { IMovieDetailPromise } from "../routes/Detail";
 
 export default function MovieContent({ moviePromise }:IMovieDetailPromise) {
     

@@ -23,10 +23,12 @@ export const detailLoader = async ({ params }: IParams) => {
     return { moviePromise };
 }
 
+export interface IMovieDetailPromise {
+    moviePromise: Promise<MovieDetailProps>;
+}
+
 function Detail() {
-    const { moviePromise } = useLoaderData() as Awaited<
-        ReturnType<typeof detailLoader>
-    >;
+    const { moviePromise } = useLoaderData() as IMovieDetailPromise;
 
     return (
         <div className={styles.container}>

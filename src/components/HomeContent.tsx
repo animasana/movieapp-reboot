@@ -4,13 +4,13 @@ import type { MovieGenres, MovieSearchResult } from "../types/MovieListTypes";
 import type { AxiosResponse } from "axios";
 import MovieList from "./MoviesList";
 
-interface HomeContentProps {
-    dataPromise: Promise<[AxiosResponse<MovieSearchResult>, AxiosResponse<MovieGenres>]>;
+export interface HomeContentProps {
+    homeData: Promise<[AxiosResponse<MovieSearchResult>, AxiosResponse<MovieGenres>]>;
 }
 
-export default function HomeContent({ dataPromise }: HomeContentProps) {
+export default function HomeContent({ homeData }: HomeContentProps) {
     // 💡 use 훅을 쓰면 Suspense와 연동되어 Promise가 끝날 때까지 렌더링을 기다립니다.
-    const [movieResult, genreResult] = use(dataPromise);
+    const [movieResult, genreResult] = use(homeData);
     const { setGenreMap, setMovies } = useMovieStore();
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 ﻿import { Link } from "react-router";
 import styles from "./MovieDetail.module.css";
 
-interface IParams {
+interface IMovieDetailProps {
     id: number;
     release_date: string;
     poster_path: string;
@@ -13,8 +13,13 @@ interface IParams {
     }[];
 }
 
-function MovieDetail(params: IParams) {
-    const { release_date, poster_path, title, overview, genres } = params;
+function MovieDetail({ 
+    release_date, 
+    poster_path, 
+    title, 
+    overview, 
+    genres 
+}: IMovieDetailProps) {    
 
     return (        
         <div className={styles.movie}>

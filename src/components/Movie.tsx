@@ -1,16 +1,25 @@
 import { Link } from "react-router";
-import type { MovieProps } from "../types/MovieListTypes";
 import { useMovieStore } from "../store/useMovieStore";
 import styles from "./Movie.module.css";
 
-function Movie({
-    id,
-    release_date,
-    poster_path,
-    genre_ids,
-    title,
-    overview,
+interface MovieProps {
+    id: number;
+    release_date?: string;
+    poster_path: string;
+    genre_ids: number[];
+    title: string;
+    overview: string;
+}
+
+function Movie({ 
+    id, 
+    release_date, 
+    poster_path, 
+    genre_ids, 
+    title, 
+    overview 
 }: MovieProps) {
+    
     const genreMap = useMovieStore((state) => state.genreMap);
 
     return (

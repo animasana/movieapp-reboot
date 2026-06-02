@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import type { MovieSearchResult, MovieGenres } from "../types/MovieListTypes";
 import styles from "./Home.module.css";
 import { GENRE_URL, MOVIEDB_URL } from "../constants";
-import HomeContent from "../components/HomeContent";
+import HomeContent, { type HomeContentProps } from "../components/HomeContent";
 import { useLoaderData } from "react-router";
 
 export const homeLoader = async () => {
@@ -14,9 +14,7 @@ export const homeLoader = async () => {
 };
 
 function Home() {
-    const { homeData } = useLoaderData() as Awaited<
-        ReturnType<typeof homeLoader>
-    >;
+    const { homeData } = useLoaderData() as HomeContentProps;
 
     return (
         <div className={styles.container}>
@@ -27,7 +25,7 @@ function Home() {
                     </div>
                 }
             >
-                <HomeContent dataPromise={homeData} />
+                <HomeContent homeData={homeData} />
             </Suspense>
         </div>
     );
